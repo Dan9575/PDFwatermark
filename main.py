@@ -99,7 +99,12 @@ class App:
             padx=5
             ).grid(row=0, column=2, pady=5, padx=20, sticky='w')
 
-        self.delete_button = tk.Button(self.update_group, text='CONFIRM DELETE', command=self.delete_owner, state='disabled', padx=5)
+        self.delete_button = tk.Button(s
+            elf.update_group, 
+            text='CONFIRM DELETE', 
+            command=self.delete_owner, 
+            state='disabled', 
+            padx=5)
         self.delete_button.grid(row=0, column=3, pady=5, padx=20, sticky='w')
 
         self.new_owner_name = tk.StringVar()
