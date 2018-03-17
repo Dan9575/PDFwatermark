@@ -199,7 +199,7 @@ class DefaultsWindow(tk.Toplevel):
         tk.Button(self, text='Save', command=self.save_paths).grid(row=11, pady=10, padx=10, sticky='w')
 
     def save_paths(self):
-        for k, v in self.defaults_dict.items():
+        for v in self.defaults_dict.values():
             self.main_window.variables[v] = self.entry_dict[v].get()
 
         with open('- Tool\defaults.txt', 'w') as file:
