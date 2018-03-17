@@ -10,7 +10,6 @@ class App:
     def __init__(self, master):
         with open('- Tool\defaults.txt', 'r') as file:
             self.variables = json.loads(file.read())
-
         with open('- Tool\data.txt', 'r') as file:
             self.data = json.loads(file.read())
 
@@ -20,23 +19,50 @@ class App:
         self.message = tk.StringVar()
         self.update_name = tk.StringVar()
         self.watermark_prefix_text = tk.StringVar()
-        self.watermark_prefix_text.set("Current Watermark Prefix is: " + self.variables['watermark_prefix'])
+
+        self.watermark_prefix_text.set(
+            "Current Watermark Prefix is: " 
+            + self.variables['watermark_prefix'])
         master.title("PDF Watermarking Tool")
         self.message.set("Watermark Tool!")
 
         tk.Frame(master).grid(row=0, pady=5)
-        tk.Label(master, textvariable=self.message, font=('Arial', 12), width=30).grid(row=1, pady=10, columnspan=2)
-        tk.Checkbutton(master, text='Watermark last page', variable=self.last_page, anchor='e', padx=5,
-                       pady=10).grid(row=4, sticky='w')
-        tk.Button(master, text='Run All', command=self.watermark_all, padx=5, width=10).grid(row=2, pady=5, padx=10, column=0, sticky='w')
-        tk.Button(master, text='Settings', command=self.open_frame, padx=5, width=10).grid(row=3, pady=5, padx=10, column=0, sticky='w')
+        tk.Label(
+            master, 
+            textvariable=self.message, 
+            font=('Arial', 12), 
+            width=30
+            ).grid(row=1, pady=10, columnspan=2)
+        tk.Checkbutton(
+            master, 
+            text='Watermark last page', 
+            variable=self.last_page, 
+            anchor='e', 
+            padx=5, pady=10
+            ).grid(row=4, sticky='w')
+        tk.Button(
+            master, 
+            text='Run All', 
+            command=self.watermark_all, 
+            padx=5, width=10
+            ).grid(row=2, pady=5, padx=10, column=0, sticky='w')
+        tk.Button(
+            master, 
+            text='Settings', 
+            command=self.open_frame, 
+            padx=5, width=10
+            ).grid(row=3, pady=5, padx=10, column=0, sticky='w')
 
         self.run_some = tk.LabelFrame(master, text='Run Some')
         self.run_some.grid(row=5, pady=5, padx=10, sticky='w')
 
         # Owners list
         self.scrollbar = tk.Scrollbar(self.run_some, orient='vertical')
-        self.ol = tk.Listbox(self.run_some, yscrollcommand=self.scrollbar.set, selectmode='extended', exportselection=0)
+        self.ol = tk.Listbox(
+            self.run_some, 
+            yscrollcommand=self.scrollbar.set, 
+            selectmode='extended', 
+            exportselection=0)
         self.scrollbar.config(command=self.ol.yview)
         self.ol.grid(row=0, column=0, pady=5, padx=0, sticky='w')
 
@@ -47,18 +73,31 @@ class App:
                              exportselection=0)
         self.fl.grid(row=0, column=2, pady=5, padx=10, sticky='w')
 
-        tk.Button(self.run_some, command=self.watermark_some, text='Run Some',  padx=5, width=10).grid(row=3, pady=5, padx=10, column=0,
-                                                                                   sticky='w')
-        tk.Button(self.run_some, command=self.build_owners_list_box, text='Update Files List',  padx=5, width=12).grid(row=3, pady=5, padx=10, column=2,
-                                                                                   sticky='w')
+        tk.Button(
+            self.run_some, 
+            command=self.watermark_some, 
+            text='Run Some',  
+            padx=5, width=10
+            ).grid(row=3, pady=5, padx=10, column=0, sticky='w')
+        tk.Button(
+            self.run_some, 
+            command=self.build_owners_list_box, 
+            text='Update Files List',  
+            padx=5, width=12).grid(row=3, pady=5, padx=10, column=2, sticky='w')
         self.update_group = tk.LabelFrame(master, text='Update Owner Lists')
         self.update_group.grid(row=6, pady=5, padx=10, sticky='w')
-        tk.Button(self.update_group, text='Update Watermarks', command=self.eidt_lists, padx=5).grid(row=0, column=1,
-                                                                                                     pady=5, padx=20,
-                                                                                                     sticky='w')
-        tk.Button(self.update_group, text='Delete Owner', command=self.add_delete_button, padx=5).grid(row=0, column=2,
-                                                                                                  pady=5, padx=20,
-                                                                                                  sticky='w')
+        tk.Button(
+            self.update_group, 
+            text='Update Watermarks', 
+            command=self.eidt_lists, 
+            padx=5
+            ).grid(row=0, column=1, pady=5, padx=20, sticky='w')
+        tk.Button(
+            self.update_group, 
+            text='Delete Owner', 
+            command=self.add_delete_button, 
+            padx=5
+            ).grid(row=0, column=2, pady=5, padx=20, sticky='w')
 
         self.delete_button = tk.Button(self.update_group, text='CONFIRM DELETE', command=self.delete_owner, state='disabled', padx=5)
         self.delete_button.grid(row=0, column=3, pady=5, padx=20, sticky='w')
