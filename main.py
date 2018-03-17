@@ -110,9 +110,16 @@ class App:
         self.new_owner_name = tk.StringVar()
         self.new_owner = tk.LabelFrame(master, text='Add Owner')
         self.new_owner.grid(row=7, pady=5, padx=10, sticky='w')
-        tk.Entry(self.new_owner, textvariable=self.new_owner_name).grid(row=0, column=0, pady=5, padx=5, sticky='w')
-        tk.Button(self.new_owner, text='Add', command=self.add_owner, padx=5).grid(row=0, column=1, pady=5, padx=5,
-                                                                                                     sticky='w')
+        tk.Entry(
+            self.new_owner, 
+            textvariable=self.new_owner_name
+            ).grid(row=0, column=0, pady=5, padx=5, sticky='w')
+        tk.Button(
+            self.new_owner, 
+            text='Add', 
+            command=self.add_owner, 
+            padx=5
+            ).grid(row=0, column=1, pady=5, padx=5, sticky='w')
         self.build_owners_list_box()
 
         self.check_version()
@@ -123,8 +130,10 @@ class App:
         self.owners = sorted([i for i in self.data.keys()])
         self.ol.delete(0, 'end')
         self.fl.delete(0, 'end')
-        tk.OptionMenu(self.update_group, self.update_name, *[i for i in self.owners]).grid(row=0, column=0, pady=5,
-                                                                                           padx=0)
+        tk.OptionMenu(
+            self.update_group, 
+            self.update_name, *[i for i in self.owners]
+            ).grid(row=0, column=0, pady=5, padx=0)
         for i in self.owners:
             self.ol.insert('end', i)
 
@@ -224,7 +233,13 @@ class DefaultsWindow(tk.Toplevel):
         tk.Toplevel.__init__(self)
         self.title('Settings')
 
-        tk.Label(self, text="Settings", pady=10, font=('Arial', 12), anchor='w').grid(row=0, pady=5, columnspan=2, sticky='w')
+        tk.Label(
+            self, 
+            text="Settings", 
+            pady=10, 
+            font=('Arial', 12), 
+            anchor='w'
+            ).grid(row=0, pady=5, columnspan=2, sticky='w')
 
         self.defaults_dict = {"Watermarks Folder": 'watermarks_path',
                          'Save Watermarked Files': 'save_path',
@@ -240,7 +255,11 @@ class DefaultsWindow(tk.Toplevel):
             self.entry_dict[v].insert(0, self.main_window.variables[v])
             i += 1
 
-        tk.Button(self, text='Save', command=self.save_paths).grid(row=11, pady=10, padx=10, sticky='w')
+        tk.Button(
+            self, 
+            text='Save', 
+            command=self.save_paths
+            ).grid(row=11, pady=10, padx=10, sticky='w')
 
     def save_paths(self):
         for v in self.defaults_dict.values():
@@ -258,14 +277,23 @@ class ListWindow(tk.Toplevel):
         self.title('Watermark Lists')
         self.update_name = self.main_window.update_name.get()
 
-        tk.Label(self, text="Watermark List", pady=10, font=('Arial', 12)).grid(row=0, pady=5, columnspan=2)
+        tk.Label(
+            self, 
+            text="Watermark List", 
+            pady=10, 
+            font=('Arial', 12)
+            ).grid(row=0, pady=5, columnspan=2)
         self.t = tk.Text(self)
         watermark_list = self.main_window.data[self.update_name]
         for i in sorted(watermark_list, reverse=True):
             self.t.insert(1.0, i + '\n')
         self.t.grid(row=2)
 
-        tk.Button(self, text='Save', command=self.save).grid(row=11, pady=10, padx=10, sticky='w')
+        tk.Button(
+            self, 
+            text='Save', 
+            command=self.save
+            ).grid(row=11, pady=10, padx=10, sticky='w')
 
     def save(self):
         contents = self.t.get('1.0', 'end-1c')
@@ -323,7 +351,9 @@ class WatermarkMaker:
                     pdf.PageMerge(page).add(watermark).render()
             writer.addpage(page)
             i += 1
-        file_name = self.save_path + owner + '/' + name + '/' + output_file_name + ' - ' + name + '.pdf'
+        file_name = (self.save_path + owner + '/' 
+            + name + '/' 
+            + output_file_name + ' - ' + name + '.pdf')
         os.makedirs(os.path.dirname(file_name), exist_ok=True)
         writer.write(file_name)
 
